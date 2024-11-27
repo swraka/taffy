@@ -135,6 +135,7 @@ use crate::style::{FlexboxContainerStyle, FlexboxItemStyle};
 use crate::style::{GridContainerStyle, GridItemStyle};
 #[cfg(feature = "block_layout")]
 use crate::{BlockContainerStyle, BlockItemStyle};
+use crate::{CassowaryContainerStyle, CassowaryItemStyle};
 use core::ops::{Deref, DerefMut};
 
 /// Taffy's abstraction for downward tree traversal.
@@ -269,6 +270,25 @@ pub trait LayoutBlockContainer: LayoutPartialTree {
 
     /// Get the child's styles
     fn get_block_child_style(&self, child_node_id: NodeId) -> Self::BlockItemStyle<'_>;
+}
+
+#[cfg(feature = "cassowary")]
+/// Extends [`LayoutPartialTree`] with getters for the styles required for Cassowary layout
+pub trait LayoutCassowaryContainer: LayoutPartialTree {
+    /// The style type representing the CSS Block container's styles
+    type CassowaryContainerStyle<'a>: CassowaryContainerStyle
+    where
+        Self: 'a;
+    /// The style type representing each CSS Block item's styles
+    type CassowaryItemStyle<'a>: CassowaryItemStyle
+    where
+        Self: 'a;
+
+    /// Get the container's styles
+    fn get_cassowary_container_style(&self, node_id: NodeId) -> Self::CassowaryContainerStyle<'_>;
+
+    /// Get the child's styles
+    fn get_cassowary_child_style(&self, child_node_id: NodeId) -> Self::CassowaryItemStyle<'_>;
 }
 
 // --- PRIVATE TRAITS

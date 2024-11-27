@@ -33,6 +33,9 @@ pub(crate) mod flexbox;
 #[cfg(feature = "grid")]
 pub(crate) mod grid;
 
+#[cfg(feature = "cassowary")]
+pub(crate) mod cassowary;
+
 pub use leaf::compute_leaf_layout;
 
 #[cfg(feature = "block_layout")]
@@ -43,6 +46,9 @@ pub use self::flexbox::compute_flexbox_layout;
 
 #[cfg(feature = "grid")]
 pub use self::grid::compute_grid_layout;
+
+#[cfg(feature = "cassowary")]
+pub use self::cassowary::compute_cassowary_layout;
 
 use crate::geometry::{Line, Point, Size};
 use crate::style::{AvailableSpace, CoreStyle, Overflow};

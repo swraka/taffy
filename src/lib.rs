@@ -96,6 +96,9 @@ mod readme_doctest {
 #[cfg(feature = "block_layout")]
 #[doc(inline)]
 pub use crate::compute::compute_block_layout;
+#[cfg(feature = "cassowary")]
+#[doc(inline)]
+pub use crate::compute::compute_cassowary_layout;
 #[cfg(feature = "flexbox")]
 #[doc(inline)]
 pub use crate::compute::compute_flexbox_layout;

@@ -4,6 +4,8 @@ mod dimension;
 
 #[cfg(feature = "block_layout")]
 mod block;
+#[cfg(feature = "cassowary")]
+mod cassowary;
 #[cfg(feature = "flexbox")]
 mod flex;
 #[cfg(feature = "grid")]
@@ -14,6 +16,8 @@ pub use self::dimension::{AvailableSpace, Dimension, LengthPercentage, LengthPer
 
 #[cfg(feature = "block_layout")]
 pub use self::block::{BlockContainerStyle, BlockItemStyle, TextAlign};
+#[cfg(feature = "cassowary")]
+pub use self::cassowary::{CassowaryContainerStyle, CassowaryItemStyle};
 #[cfg(feature = "flexbox")]
 pub use self::flex::{FlexDirection, FlexWrap, FlexboxContainerStyle, FlexboxItemStyle};
 #[cfg(feature = "grid")]
@@ -135,10 +139,14 @@ pub enum Display {
     /// The children will follow the CSS Grid layout algorithm
     #[cfg(feature = "grid")]
     Grid,
+    /// The children will follow the Cassowary layout algorithm
+    #[cfg(feature = "cassowary")]
+    Cassowary,
     /// The node is hidden, and it's children will also be hidden
     None,
 }
 
+// TODO: cover cassowary variations
 impl Display {
     /// The default Display mode
     #[cfg(feature = "flexbox")]
@@ -173,6 +181,8 @@ impl core::fmt::Display for Display {
             Display::Flex => write!(f, "FLEX"),
             #[cfg(feature = "grid")]
             Display::Grid => write!(f, "GRID"),
+            #[cfg(feature = "cassowary")]
+            Display::Cassowary => write!(f, "CASSOWARY"),
         }
     }
 }

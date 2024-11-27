@@ -24,6 +24,7 @@ serde = { version = "1.0", default-features = false, optional = true, features =
 ] }
 slotmap = { version = "1.0.6", default-features = false, optional = true }
 grid = { version = "0.15.0", default-features = false, optional = true }
+cassowary = { version = "0.3.0", optional = true }
 
 [package.metadata.docs.rs]
 # To test all the documentation related features, run:
@@ -40,6 +41,7 @@ default = [
     "taffy_tree",
     "flexbox",
     "grid",
+    "cassowary",
     "block_layout",
     "content_size",
 ]
@@ -53,6 +55,8 @@ block_layout = []
 flexbox = []
 ## Enables the CSS Grid layout algorithm. See [`compute_grid_layout`](crate::compute_grid_layout).
 grid = ["alloc", "dep:grid"]
+## Enables the Cassowary layout algorithm. See [`compute_cassowary_layout`](crate::compute_cassowary_layout).
+cassowary = ["dep:cassowary"]
 ## Causes all algorithms to compute and output a content size for each node
 content_size = []
 

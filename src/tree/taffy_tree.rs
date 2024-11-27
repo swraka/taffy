@@ -15,7 +15,8 @@ use crate::util::debug::{debug_log, debug_log_node};
 use crate::util::sys::{new_vec_with_capacity, ChildrenVec, Vec};
 
 use crate::compute::{
-    compute_cached_layout, compute_hidden_layout, compute_leaf_layout, compute_root_layout, round_layout,
+    compute_cached_layout, compute_cassowary_layout, compute_hidden_layout, compute_leaf_layout, compute_root_layout,
+    round_layout,
 };
 #[cfg(feature = "block_layout")]
 use crate::{compute::compute_block_layout, LayoutBlockContainer};
@@ -213,6 +214,8 @@ impl<NodeContext> PrintTree for TaffyTree<NodeContext> {
             }
             #[cfg(feature = "grid")]
             (_, Display::Grid) => "GRID",
+            #[cfg(feature = "cassowary")]
+            (_, Display::Cassowary) => "CASSOWARY",
         }
     }
 
@@ -340,6 +343,8 @@ where
                 (Display::Flex, true) => compute_flexbox_layout(tree, node, inputs),
                 #[cfg(feature = "grid")]
                 (Display::Grid, true) => compute_grid_layout(tree, node, inputs),
+                #[cfg(feature = "cassowary")]
+                (Display::Cassowary, true) => compute_cassowary_layout(tree, node, inputs),
                 (_, false) => {
                     let node_key = node.into();
                     let style = &tree.taffy.nodes[node_key].style;
