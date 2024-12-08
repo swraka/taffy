@@ -931,6 +931,18 @@ impl<T: GridItemStyle> GridItemStyle for &'_ T {
     }
 }
 
+#[cfg(feature = "cassowary")]
+impl CassowaryContainerStyle for &Style {}
+
+#[cfg(feature = "cassowary")]
+impl<T: CassowaryContainerStyle> CassowaryContainerStyle for &'_ T {}
+
+#[cfg(feature = "cassowary")]
+impl CassowaryItemStyle for Style {}
+
+#[cfg(feature = "cassowary")]
+impl<T: CassowaryItemStyle> CassowaryItemStyle for &'_ T {}
+
 #[cfg(test)]
 mod tests {
     use super::Style;

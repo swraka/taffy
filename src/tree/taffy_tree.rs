@@ -18,6 +18,7 @@ use crate::compute::{
     compute_cached_layout, compute_cassowary_layout, compute_hidden_layout, compute_leaf_layout, compute_root_layout,
     round_layout,
 };
+use crate::LayoutCassowaryContainer;
 #[cfg(feature = "block_layout")]
 use crate::{compute::compute_block_layout, LayoutBlockContainer};
 #[cfg(feature = "flexbox")]
@@ -435,6 +436,32 @@ where
     #[inline(always)]
     fn get_grid_child_style(&self, child_node_id: NodeId) -> Self::GridItemStyle<'_> {
         &self.taffy.nodes[child_node_id.into()].style
+    }
+}
+
+#[cfg(feature = "cassowary")]
+impl<NodeContext, MeasureFunction> LayoutCassowaryContainer for TaffyView<'_, NodeContext, MeasureFunction>
+where
+    MeasureFunction:
+        FnMut(Size<Option<f32>>, Size<AvailableSpace>, NodeId, Option<&mut NodeContext>, &Style) -> Size<f32>,
+{
+    type CassowaryContainerStyle<'a>
+        = &'a Style
+    where
+        Self: 'a;
+    type CassowaryItemStyle<'a>
+        = &'a Style
+    where
+        Self: 'a;
+
+    #[inline(always)]
+    fn get_cassowary_container_style(&self, node_id: NodeId) -> Self::CassowaryContainerStyle<'_> {
+        self.get_core_container_style(node_id)
+    }
+
+    #[inline(always)]
+    fn get_cassowary_child_style(&self, child_node_id: NodeId) -> Self::CassowaryItemStyle<'_> {
+        self.get_core_container_style(child_node_id)
     }
 }
 
